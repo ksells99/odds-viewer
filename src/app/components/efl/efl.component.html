@@ -1,0 +1,128 @@
+<button routerLink="" class="btn btn-info mb-3">
+  <i class="fas fa-chevron-circle-left"></i> Back
+</button>
+<button (click)="refreshOdds()" class="btn btn-light mb-3 pull-right">
+  <i class="fas fa-sync-alt"></i> Refresh
+</button>
+
+<div class="text-light badge badge-success py-3 mb-3" style="width: 100%;">
+  <h2 style="width: 100%;">EFL Championship Odds</h2>
+</div>
+
+<!-- Search bar - modelled to searchTerm property, calls searchOdds function when entered -->
+<div class="form-group text-light mb-3">
+  <input
+    class="form-control form-control-lg text-light"
+    name="search"
+    type="text"
+    placeholder="Search matches (home team)..."
+    id="searchOdds"
+    (keyup)="searchOdds()"
+    [(ngModel)]="searchTerm"
+  />
+</div>
+
+<!-- Show if not loading and no search input -->
+<ng-container *ngIf="searchTerm == '' && !loading">
+  <!-- Loop through each match and output info -->
+  <div class="card mb-3" *ngFor="let odd of odds">
+    <div class="card-header">
+      <h4>
+        {{ odd.teams[0] }}<span class="text-black-50"> vs.</span>
+        {{ odd.teams[1] }}
+      </h4>
+      <p>Kick off: {{ odd.commence_time * 1000 | date: "dd/MM/yyyy HH:mm" }}</p>
+      <p>
+        Home team: <span class="font-weight-bold">{{ odd.home_team }}</span>
+      </p>
+    </div>
+    <div class="card-body">
+      <h5>
+        Latest odds from
+        <span class="badge badge-info badge-pill"> {{ odd.sites.length }}</span>
+        bookies
+      </h5>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Bookie</th>
+            <th>Last updated</th>
+            <th>Home</th>
+            <th>Draw</th>
+            <th>Away</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Loop through returned bookies/odds and create table row for each -->
+          <tr *ngFor="let site of odd.sites">
+            <td>{{ site.site_nice }}</td>
+            <td>{{ site.last_update * 1000 | date: "dd/MM/yyyy HH:mm:ss" }}</td>
+            <td>{{ site.odds.h2h[0] }}</td>
+            <td>{{ site.odds.h2h[2] }}</td>
+            <td>{{ site.odds.h2h[1] }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</ng-container>
+
+<!-- Show there are search results -->
+<ng-container *ngIf="filteredOdds && filteredOdds.length > 0">
+  <!-- Loop through each filtered match and output info -->
+  <div class="card mb-3" *ngFor="let odd of filteredOdds">
+    <div class="card-header">
+      <h4>
+        {{ odd.teams[0] }}<span class="text-black-50"> vs.</span>
+        {{ odd.teams[1] }}
+      </h4>
+      <p>Kick off: {{ odd.commence_time * 1000 | date: "dd/MM/yyyy HH:mm" }}</p>
+      <p>
+        Home team: <span class="font-weight-bold">{{ odd.home_team }}</span>
+      </p>
+    </div>
+    <div class="card-body">
+      <h5>
+        Latest odds from
+        <span class="badge badge-info badge-pill"> {{ odd.sites.length }}</span>
+        bookies
+      </h5>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Bookie</th>
+            <th>Last updated</th>
+            <th>Home</th>
+            <th>Draw</th>
+            <th>Away</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Loop through returned bookies/odds and create table row for each -->
+          <tr *ngFor="let site of odd.sites">
+            <td>{{ site.site_nice }}</td>
+            <td>{{ site.last_update * 1000 | date: "dd/MM/yyyy HH:mm:ss" }}</td>
+            <td>{{ site.odds.h2h[0] }}</td>
+            <td>{{ site.odds.h2h[2] }}</td>
+            <td>{{ site.odds.h2h[1] }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</ng-container>
+
+<!-- Show loading gif if loading=true -->
+<div *ngIf="loading">
+  <img
+    src="../../../assets/loading.gif"
+    alt=""
+    style="width: 60px; display: block; margin-left: auto; margin-right: auto;"
+    class="text-center"
+  />
+  <h4 class="text-light mt-4 text-center">Fetching odds...</h4>
+</div>
+
+<div *ngIf="filteredOdds && filteredOdds.length == 0">
+  <h4 class="text-light">No matches found.</h4>
+</div>

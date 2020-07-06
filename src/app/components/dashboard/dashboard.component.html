@@ -1,0 +1,81 @@
+<div class="container">
+  <div class="jumbotron">
+    <h1 class="display-4 mb-3">Welcome to OddsViewer</h1>
+    <p class="lead">
+      View the latest betting odds across a number of football leagues, from a
+      selection of bookmakers.
+    </p>
+    <hr class="my-4" />
+    <p>
+      This application was built using Angular along with Bootswatch for
+      styling. Odds data is obtained via "The Odds API".
+    </p>
+  </div>
+
+  <button routerLink="/premier-league" class="btn btn-primary btn-block">
+    Premier League Odds
+    <hr />
+    <h5 *ngIf="premierLeagueOdds && !premierLeagueLoading">
+      <span class="badge badge-info">
+        {{ premierLeagueOdds.length }} Matches</span
+      >
+    </h5>
+    <div
+      *ngIf="premierLeagueLoading"
+      class="spinner-border text-secondary text-center"
+      role="status"
+    ></div>
+  </button>
+
+  <button routerLink="/fa-cup" class="btn btn-warning btn-block">
+    FA Cup Odds
+    <hr />
+    <h5 *ngIf="faCupOdds && !faCupLoading">
+      <span class="badge badge-info"> {{ faCupOdds.length }} Matches</span>
+    </h5>
+    <div
+      *ngIf="faCupLoading"
+      class="spinner-border text-secondary text-center"
+      role="status"
+    ></div>
+  </button>
+
+  <button routerLink="/efl-championship" class="btn btn-success btn-block">
+    EFL Championship Odds
+    <hr />
+    <h5 *ngIf="eflOdds && !eflLoading">
+      <span class="badge badge-info"> {{ eflOdds.length }} Matches</span>
+    </h5>
+    <div
+      *ngIf="eflLoading"
+      class="spinner-border text-secondary text-center"
+      role="status"
+    ></div>
+  </button>
+
+  <button routerLink="/uefa-europa" class="btn btn-light btn-block">
+    UEFA Europa League Odds
+    <hr />
+    <h5 *ngIf="uefaOdds && !uefaLoading">
+      <span class="badge badge-info"> {{ uefaOdds.length }} Matches</span>
+    </h5>
+    <div
+      *ngIf="uefaLoading"
+      class="spinner-border text-secondary text-center"
+      role="status"
+    ></div>
+  </button>
+
+  <button routerLink="/la-liga" class="btn btn-danger btn-block mb-3">
+    Spanish La Liga Odds
+    <hr />
+    <h5 *ngIf="laLigaOdds && !laLigaLoading">
+      <span class="badge badge-info"> {{ laLigaOdds.length }} Matches</span>
+    </h5>
+    <div
+      *ngIf="laLigaLoading"
+      class="spinner-border text-secondary text-center"
+      role="status"
+    ></div>
+  </button>
+</div>
